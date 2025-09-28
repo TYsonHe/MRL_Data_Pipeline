@@ -30,6 +30,12 @@ class CocoApi:
         self.super_cat_names = [cat['supercategory'] for cat in self.cats]
         print("Super Categories Names: \n", self.super_cat_names)
 
+    def get_imgs_all(self):
+        imgIds = self.coco.getImgIds()
+        print(f"total num of Image Ids: \n", len(imgIds))
+        imgs = self.coco.loadImgs(imgIds)
+        return imgIds, imgs
+
     def get_imgs_by_cat_names(self, cat_names):
         imgIds = self.coco.getImgIds(
             catIds=self.coco.getCatIds(catNms=cat_names))
@@ -75,7 +81,7 @@ class CocoApi:
             plt.show()
 
 
-if __name__ == '__main__':
+def test_100matched():
     # 示例使用，获取100对包含指定类别名称的图像和注释，并保存
     dataDir = './Datasets/MS_COCO'
     dataType = 'val2014'
@@ -117,3 +123,58 @@ if __name__ == '__main__':
         # ann保存为json格式,增加写入
         with open(f"{test_100_annpath}/{img['id']}.json", 'w') as f:
             json.dump(anns, f)
+
+
+def test_resized():
+    # 示例使用，获取resized后的图片并显示
+    dataDir = './resized_dataset/images'
+    dataType = 'val2014'
+    annFile = './resized_dataset/annotations_val2014.json'
+    coco_api = CocoApi(dataDir, dataType, annFile)
+    coco_api.print_coco_cats()
+    # cat_names = ['person', 'dog', 'cat'] 可以是一个list
+    cat_names = ['person']
+    imgIds, imgs = coco_api.get_imgs_by_cat_names(cat_names)
+
+    # 显示第一个图像和注释
+    print(imgs[:1])
+    annIds, anns = coco_api.get_anns_by_img_ids(imgIds[:1])
+    print(anns)
+    coco_api.show_imgs_with_anns(imgIds[:1])
+
+
+def test_resized_all():
+    # 示例使用，获取resized后的所有图片并显示
+    dataDir = './resized_dataset_all/images'
+    dataType = 'val2014'
+    annFile = './resized_dataset_all/annotations_val2014.json'
+    coco_api = CocoApi(dataDir, dataType, annFile)
+    coco_api.print_coco_cats()
+    # cat_names = ['person', 'dog', 'cat'] 可以是一个list
+    cat_names = ['person']
+    imgIds, imgs = coco_api.get_imgs_by_cat_names(cat_names)
+
+    print(imgs[:1])
+    annIds, anns = coco_api.get_anns_by_img_ids(imgIds[:1])
+    print(anns)
+    coco_api.show_imgs_with_anns(imgIds[:1])
+
+
+def test_resized_caption():
+    # 示例使用，获取resized后的图片并显示
+    dataDir = './resized_dataset_captions/images'
+    dataType = 'val2014'
+    annFile = './resized_dataset_captions/annotations_captions_val2014.json'
+    coco_api = CocoApi(dataDir, dataType, annFile)
+    imgIds, imgs = coco_api.get_imgs_all()
+
+    print(imgs[:1])
+    annIds, anns = coco_api.get_anns_by_img_ids(imgIds[:1])
+    print(anns)
+    coco_api.show_imgs_with_anns(imgIds[:1])
+
+
+if __name__ == '__main__':
+    # test_resized()
+    # test_resized_all()
+    test_resized_caption()

@@ -1,2 +1,5 @@
 /Datasets
 *.zip
+/resized_dataset
+/resized_dataset_all
+/resized_dataset_captions
