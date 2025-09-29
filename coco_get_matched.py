@@ -174,7 +174,22 @@ def test_resized_caption():
     coco_api.show_imgs_with_anns(imgIds[:1])
 
 
+def test_resized_caption_keywords():
+    # 示例使用，获取resized后的图片并显示
+    dataDir = './resized_dataset_captions/images'
+    dataType = 'val2014'
+    annFile = './resized_dataset_captions/captions_val2014_keywords.json'
+    coco_api = CocoApi(dataDir, dataType, annFile)
+    imgIds, imgs = coco_api.get_imgs_all()
+
+    print(imgs[:1])
+    annIds, anns = coco_api.get_anns_by_img_ids(imgIds[:1])
+    print(f"anns: {anns}")
+    coco_api.show_imgs_with_anns(imgIds[:1])
+
+
 if __name__ == '__main__':
     # test_resized()
     # test_resized_all()
-    test_resized_caption()
+    # test_resized_caption()
+    test_resized_caption_keywords()
