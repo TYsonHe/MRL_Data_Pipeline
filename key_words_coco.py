@@ -28,8 +28,8 @@ def extract_keywords_from_captions(captions, top_k=10):
 
 
 if __name__ == "__main__":
-    annotationsFile = './Datasets/MS_COCO/annotations/captions_val2014.json'
-    outputAnnotationsFile = './Datasets/MS_COCO/annotations/captions_val2014_keywords.json'
+    annotationsFile = './Datasets/MS_COCO/annotations/captions_train2014.json'
+    outputAnnotationsFile = './Datasets/MS_COCO/annotations/captions_train2014_keywords.json'
 
     print("Loading annotations file...")
     with open(annotationsFile, 'r', encoding='utf-8') as f:
